@@ -1,0 +1,23 @@
+{
+  "name": "hackweek",
+  "version": "1.0.0",
+  "description": "The Repo for the 2019 Discord Hackweek",
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^6.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/broodroosterdev/hackweek.git"
+  },
+  "author": "thuverx, scientistmonkey, broodroosterdev",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/broodroosterdev/hackweek/issues"
+  },
+  "homepage": "https://github.com/broodroosterdev/hackweek#readme"
+}
