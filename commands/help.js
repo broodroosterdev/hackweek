@@ -5,7 +5,6 @@ module.exports.run = async (bot, message, args) => {
     console.log(`${message.author.tag}, requested help in ${message.guild.name}`)
     let helpEmbed = new Discord.RichEmbed()
     .setTitle(`**Help commands for Hackweek**`)
-    .setColor(botC)
     .setThumbnail(sIcon)
     .addField("**Moderation**", `**Description:** All the fancy commands to bully other members\n**Usage:** *[prefix]* help moderation`)
     .addField("**Moosik**", `**Description:** `)
