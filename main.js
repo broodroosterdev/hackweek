@@ -50,14 +50,30 @@ bot.on('ready', () => {
 })
 
 bot.on("message", async message => {
-    if(message.author.bot) return;
-    if(message.channel.type === "dm") return;
-  
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
 
-    if(!cmd.startsWith(prefix)) return;
+    db.collection('guilds').doc(message.guild.id).get().then((q) => {
+        if (q.exists){
+          prefix = q.data().prefix;
+        }
+      }).then(() => {
+        if(message.author.bot) return;
+        if(message.channel.type === "dm") return;
+        let sIcon = message.guild.iconURL;
+    
+        let messageArray = message.content.split(" ");
+        let cmd = messageArray[0];
+        let args = messageArray.slice(1);
+    
+        var option = {
+            active: active
+          }
+        if(!cmd.startsWith(prefix)) return;
+    
+        let cmdFiles = bot.commands.get(cmd.slice(prefix.length));
+        if (cmdFiles) {
+          cmdFiles.run(bot, message, args, db, option);
+        }
+      }) 
 
 
 })
