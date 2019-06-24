@@ -2,7 +2,7 @@
   "name": "hackweek",
   "version": "1.0.0",
   "description": "The Repo for the 2019 Discord Hackweek",
-  "main": "index.js",
+  "main": "main.js",
   "dependencies": {
     "firebase": "^6.2.2",
     "node-opus": "^0.3.2",
