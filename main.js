@@ -49,6 +49,17 @@ bot.on('ready', () => {
     }, 2000);
 })
 
+bot.on('guildCreate', async gData => {
+  db.collection('guilds').doc(gData.id).set({
+    'guildID': gData.id,
+    'guildName': gData.name,
+    'guildOwner': gData.owner.user.username,
+    'guildOwnerID': gData.owner.id,
+    'guildMemberCount': gData.memberCount,
+    'prefix': '/'
+  })
+});
+
 bot.on("message", async message => {
 
     db.collection('guilds').doc(message.guild.id).get().then((q) => {
