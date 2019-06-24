@@ -1,5 +1,6 @@
 # Secrets
 config.json
+serviceAccount.json
 
 # Logs
 logs
