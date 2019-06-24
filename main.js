@@ -6,8 +6,15 @@ const bot = new Discord.Client({disableEveryone: true});
 bot.commands = new Discord.Collection();
 
 //Import settings
-let prefix = "!";
+let prefix;
 const config = require('./config.json');
+
+
+// Database (firebase) setup
+const firebase = require('firebase/app');
+const FieldValue = require('firebase-admin').firestore.FieldValue;
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccount.json');
 
 bot.on('ready', () => {
     console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
@@ -25,6 +32,7 @@ bot.on("message", async message => {
     let args = messageArray.slice(1);
 
     if(!cmd.startsWith(prefix)) return;
+
 
 })
 
