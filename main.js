@@ -85,6 +85,13 @@ bot.on('guildCreate', async gData => {
     })
 });
 
+bot.on('message', async mData => {
+  db.collection('players').doc(mData.member.id).set({
+      'memberID': mData.member.id,
+      'memberScore': "0"
+  })
+})
+
 bot.on("message", async message => {
 
     db.collection('guilds').doc(message.guild.id).get().then((q) => {
