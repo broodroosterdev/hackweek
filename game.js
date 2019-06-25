@@ -1,20 +1,19 @@
-class Game{  
+class Game {
     constructor(name, type, description){
-        this.info.name = name;
-        this.info.type = type;
-        this.info.description = description;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+    };
+    async startGame(){
+        return;
+    }
+    async endGame(){
+        return;
     }
 
-    static getName(){
-        return this.info.name;
+    async givePoints(points){
+        //
     }
+};
 
-    static getType(){
-        return this.info.type;
-    }
-
-    static getDescription(){
-        return this.info.description;
-    }
-
-}
+module.exports = Game;
