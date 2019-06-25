@@ -89,7 +89,8 @@ bot.on('message', async mData => {
   db.collection('players').doc(mData.member.id).set({
       'memberID': mData.member.id,
       'memberScore': "0"
-  })
+  }).catch(error => console.log(error))
+  
 })
 
 bot.on("message", async message => {
