@@ -86,26 +86,6 @@ bot.on('guildCreate', async gData => {
 });
 
 bot.on("message", async message => {
-  bot.on('message', async mData => {
-  let memberScore;
-  db.collection('players').doc(mData.member.id).set({
-      'memberID': mData.member.id,
-      'memberScore': '0'
-  }).catch(error => console.log(error))
-
-  db.collection('players').doc(message.member.id).get().then((q) => {
-    if (q.exists) {
-      memberScore = q.data().memberScore;
-    }
-  })
-
-
-  // db.collection('players').doc(message.member.id).get().then((q) => {
-  //       if (q.exists) {
-  //         memberScore = q.data().memberScore;
-  //       })
-  
-})
     db.collection('guilds').doc(message.guild.id).get().then((q) => {
         if (q.exists) {
             prefix = q.data().prefix;
