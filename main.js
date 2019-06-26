@@ -26,7 +26,7 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-
+bot.db = admin.firestore();
 
 // COMMAND HANDLER 
 fs.readdir("./commands/", (err, files) => {
@@ -59,7 +59,7 @@ fs.readdir("./games/", (err, files) => {
     gameFiles.forEach((f, i) => {
         let props = require(`./games/${f}`);
         console.log(`${i+1}: ${f} loaded!`);
-        bot.games.set(props.name, props);
+        bot.games.set(props.name.toLowerCase(), props);
     })
 
 });
@@ -86,15 +86,13 @@ bot.on('guildCreate', async gData => {
 });
 
 bot.on('message', async mData => {
-  db.collection('players').doc(mData.member.id).set({
+  /*db.collection('players').doc(mData.member.id).set({
       'memberID': mData.member.id,
       'memberScore': "0"
-  }).catch(error => console.log(error))
+  }).catch(error => console.log(error))*/
   
 })
-
 bot.on("message", async message => {
-
     db.collection('guilds').doc(message.guild.id).get().then((q) => {
         if (q.exists) {
             prefix = q.data().prefix;
@@ -125,4 +123,5 @@ bot.on("message", async message => {
 
 
 })
+
 bot.login(config.token);

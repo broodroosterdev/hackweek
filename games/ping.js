@@ -1,5 +1,5 @@
 const Game = require("../game.js")
-class ping extends Game{
+class Ping extends Game{
     //player;
     //channel;
     //score;
@@ -8,10 +8,8 @@ class ping extends Game{
     //mainMessage;
     //timeout = 1500;
     //introduction = "Welcome to the ping game. Start by clicking on the emote i added. What happens next is an surprise :)";
-    constructor(player, channel){
-        super("Ping", "Test", "A simple test game");
-        this.player = player;
-        this.channel = channel;
+    constructor(player, channel, bot){
+        super("Ping", "Test", "A simple test game", player, channel, bot);
         this.timeout = 1500;
         this.introduction = "Welcome to the ping game. Start by clicking on the emote i added. What happens next is an surprise :)";
     }
@@ -39,7 +37,7 @@ class ping extends Game{
     async endGame(forced) {
         this.ended = true;
         if(forced){
-            this.channel.send("You were too late with responding. well, better luck next time.");
+            this.channel.send("You were too late with responding. Well, better luck next time.");
         } else {
             this.channel.send("You were on time!\nYou have won 100 points!");
             this.givePoints(100);    
@@ -47,4 +45,4 @@ class ping extends Game{
         return;
     }
 }
-module.exports = ping;
+module.exports = Ping;
