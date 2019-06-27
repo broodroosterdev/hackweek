@@ -20,7 +20,7 @@ class Game {
     }
 
     async givePoints(points){
-        if(!await this.PlayerInDb(this.player)){
+        if(!this.PlayerInDb(this.player)){
             this.bot.db.collection('players').doc(this.player.id.toString()).set({
                 "memberID": this.player.id.toString(),
                 "memberScore": "0"
@@ -28,12 +28,14 @@ class Game {
                 console.log('Added user ' + this.player.id.toString());
             });
         }
-        let playerData = this.bot.db.collection('players').doc(this.player.id.toString());
+        let playerData = await this.bot.db.collection('players').doc(this.player.id.toString());
         await this.bot.db.runTransaction(t => {
             return t.get(playerData)
             .then(doc => {
                     let oldScore = parseInt(doc.data().memberScore)
                     let newScore = oldScore + points;
+                    console.log(oldScore);
+                    console.log(newScore);
                     t.update(playerData, {memberScore: newScore.toString()});
                 })             
             }).then(result => {
@@ -46,8 +48,8 @@ class Game {
                 if (!doc.exists) {
                   console.log('No such document!');
                 } else {
-                  //console.log('Document data:', doc.data());
-                  //console.log(doc.data().memberScore);
+                  console.log('Document data:', doc.data());
+                  console.log(doc.data().memberScore);
                   this.channel.send("You have " + doc.data().memberScore + " points now!")
                 }
               })
@@ -59,11 +61,9 @@ class Game {
     async PlayerInDb(player){
         let playerData = await this.bot.db.collection('players').doc(player.id.toString());
         await playerData.get().then(doc => {
-            if (!doc.exists) {
-                return false;
-            } else {
-              return true;
-            }
+            console.log("TEST")
+            console.log(doc)
+            return doc.exists
           })
           .catch(err => {
             console.log('Error getting document', err);
