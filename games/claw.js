@@ -1,11 +1,11 @@
 const Game = require("../game.js")
 const jackpot = require("../jackpot.json")
 const arm = [
-    "                 ||*|     ||                    |*||",
-    "                 ||*|         ||                |*||",
-    "                 ||*|             ||            |*||",
-    "                 ||*|                 ||        |*||",
-    "                 ||*|                     ||    |*||",
+    "  ||*|     ||                    |*||",
+    "  ||*|         ||                |*||",
+    "  ||*|             ||            |*||",
+    "  ||*|                 ||        |*||",
+    "  ||*|                     ||    |*||",
 ];
 const claw = [
     [
@@ -29,14 +29,14 @@ class Claw extends Game{
     //timeout = 1500;
     //introduction = "Welcome to the ping game. Start by clicking on the emote i added. What happens next is an surprise :)";
     constructor(player, channel, bot){
-        super("Claw", "Test", "A simple test game", player, channel, bot);
+        super("Claw", "Arcade", "An claw machine, but for Discord", player, channel, bot);
         this.timeout = 50000;
         this.introduction = "Welcome to the claw game. You goal is to move the claw to the right position using the arrow emotes, then press the down arrow emote to lower the crane.";
     }
     async startGame(){
         this.ended = false;
         let msg = await this.channel.send(this.introduction);
-        this.buildScreen(4,1,0);
+        await this.buildScreen(2,1,0);
         this.screen = await this.channel.send(this.view.join("\n"));
         await this.screen.react("⬅");
         await this.screen.react("🔴")
@@ -58,17 +58,17 @@ class Claw extends Game{
         if(await this.height == 1){
             this.view[9] = arm[position];
             this.view[10] = arm[position];
-            console.log(this.view[10]);
+            //console.log(this.view[10]);
             if(grabbed === 0){
                 position++;
-                this.view[11] = "                 ||*|" + new Array((4 * position) + 1).join(" ") + claw[0][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
-                this.view[12] = "                 ||*|" + new Array((4 * position)).join(" ") + claw[0][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
-                this.view[13] = "                 ||*|" + new Array((4 * position) - 1).join(" ") + claw[0][2] + new Array((23 - (4 * position)) - 1).join(" ") + "|*||";
+                this.view[11] = "  ||*|" + new Array((4 * position) + 1).join(" ") + claw[0][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
+                this.view[12] = "  ||*|" + new Array((4 * position)).join(" ") + claw[0][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[13] = "  ||*|" + new Array((4 * position) - 1).join(" ") + claw[0][2] + new Array((23 - (4 * position)) - 1).join(" ") + "|*||";
             } else if(grabbed === 1){
                 position++;
-                this.view[11] = "                 ||*|" + new Array((4 * position) + 1).join(" ") + claw[1][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
-                this.view[12] = "                 ||*|" + new Array((4 * position)).join(" ") + claw[1][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
-                this.view[13] = "                 ||*|" + new Array((4 * position)).join(" ") + claw[1][2] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[11] = "  ||*|" + new Array((4 * position) + 1).join(" ") + claw[1][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
+                this.view[12] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[13] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][2] + new Array((23 - (4 * position))).join(" ") + "|*||";
             }
         } else if(await this.height == 0){
             for(var i = 9;i < 22; i++){
@@ -76,20 +76,20 @@ class Claw extends Game{
             }
             if(grabbed === 0){
                 position++;
-                this.view[22] = "                 ||*|" + new Array((4 * position) + 1).join(" ") + claw[0][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
-                this.view[23] = "                 ||*|" + new Array((4 * position)).join(" ") + claw[0][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
-                this.view[24] = "                 ||*|" + new Array((4 * position) - 1).join(" ") + claw[0][2] + new Array((23 - (4 * position)) - 1).join(" ") + "|*||";
+                this.view[22] = "  ||*|" + new Array((4 * position) + 1).join(" ") + claw[0][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
+                this.view[23] = "  ||*|" + new Array((4 * position)).join(" ") + claw[0][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[24] = "  ||*|" + new Array((4 * position) - 1).join(" ") + claw[0][2] + new Array((23 - (4 * position)) - 1).join(" ") + "|*||";
             } else if(grabbed === 1){
                 position++;
-                this.view[22] = "                 ||*|" + new Array((4 * position) + 1).join(" ") + claw[1][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
-                this.view[23] = "                 ||*|" + new Array((4 * position)).join(" ") + claw[1][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
-                this.view[24] = "                 ||*|" + new Array((4 * position)).join(" ") + claw[1][2] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[22] = "  ||*|" + new Array((4 * position) + 1).join(" ") + claw[1][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
+                this.view[23] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[24] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][2] + new Array((23 - (4 * position))).join(" ") + "|*||";
             }
             
         }
     }
     async collectReaction(reaction){
-        console.log(reaction);
+        //console.log(reaction);
         await reaction.remove(this.player);
         if(this.leftArrowFilter(reaction)){
             this.clawMoveLeft();
