@@ -85,6 +85,29 @@ bot.on('guildCreate', async gData => {
     })
 });
 
+bot.on("guildCreate", guild => {
+    console.log(`I've been added to ${guild.name}`);
+    if (guild.me.hasPermission('MANAGE_CHANNELS')) {
+        guild.channels.find(channel => channel.name === "logs");
+    } else {
+        guild.createChannel('logs', {
+            type: 'text',
+            permissionOverwrites: [{
+                    id: guild.id,
+                    deny: ['MANAGE_MESSAGES'],
+                    allow: ['SEND_MESSAGES']
+                },
+                {
+                    id: guild.defaultRole.id,
+                    deny: ["VIEW_CHANNEL"]
+                }
+            ]
+        })
+
+    }
+
+})
+
 bot.on('message', async mData => {
   /*db.collection('players').doc(mData.member.id).set({
       'memberID': mData.member.id,
