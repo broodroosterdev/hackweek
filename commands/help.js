@@ -29,25 +29,8 @@ module.exports.run = async (bot, message, args) => {
         time: 60000
     });
 
-    //   let playerData = this.bot.db.collection('players').doc(this.player.id.toString());
-    //   await playerData.get().then(doc => {
     collector.on('collect', async reaction => {
         reaction.remove(message.author)
-
-
-
-        //   if (!doc.exists) {
-
-        //       console.log('No such document!');
-
-        //   } else {
-
-        //       console.log('Document data:', doc.data());
-
-        //       console.log(doc.data().memberScore);
-
-        //       this.channel.send("You have " + doc.data().memberScore)
-        //   }
 
         switch (reaction.emoji.name) {
             case '📋':
@@ -110,7 +93,6 @@ module.exports.run = async (bot, message, args) => {
         }
 
     })
-    // })
 }
 
 module.exports.help = {
