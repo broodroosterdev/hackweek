@@ -79,9 +79,9 @@ class Claw extends Game{
         this.rightArrowFilter = (reaction) => reaction.emoji.name === "➡";
         this.redCircleFilter = (reaction) => reaction.emoji.name === "🔴";
         const filter = (reaction , user) => user.id === this.player.id;
-        const collector = this.screen.createReactionCollector(filter, { time:this.timeout});
-        collector.on('collect', reaction => this.collectReaction(reaction));
-        collector.on('end', collected => this.endCollector(collected));
+        this.collector = this.screen.createReactionCollector(filter, { time:this.timeout});
+        this.collector.on('collect', reaction => this.collectReaction(reaction));
+        this.collector.on('end', collected => this.endCollector(collected));
 
     }
     resetView(){
@@ -199,6 +199,7 @@ class Claw extends Game{
 
     async endGame(forced) {
         this.ended = true;
+        this.collector.stop();
         if(forced){
             this.channel.send("You were too late with responding. Well, better luck next time.");
         } else {
