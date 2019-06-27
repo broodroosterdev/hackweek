@@ -31,7 +31,7 @@ class Claw extends Game{
     constructor(player, channel, bot){
         super("Claw", "Arcade", "An claw machine, but for Discord", player, channel, bot);
         this.timeout = 50000;
-        this.introduction = "Welcome to the claw game. You goal is to move the claw to the right position using the arrow emotes, then press the down arrow emote to lower the crane.";
+        this.introduction = "Welcome to the claw game. Your goal is to move the claw to the right position using the arrow emotes, then press the circle emote to lower the crane.";
     }
     async startGame(){
         this.ended = false;
