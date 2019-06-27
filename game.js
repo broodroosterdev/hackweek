@@ -20,14 +20,7 @@ class Game {
     }
 
     async givePoints(points){
-        if(!this.PlayerInDb(this.player)){
-            this.bot.db.collection('players').doc(this.player.id.toString()).set({
-                "memberID": this.player.id.toString(),
-                "memberScore": "0"
-            }).then(() => {
-                console.log('Added user ' + this.player.id.toString());
-            });
-        }
+        this.PlayerInDb();
         let playerData = await this.bot.db.collection('players').doc(this.player.id.toString());
         await this.bot.db.runTransaction(t => {
             return t.get(playerData)
@@ -58,12 +51,22 @@ class Game {
               });
         }
 
-    async PlayerInDb(player){
-        let playerData = await this.bot.db.collection('players').doc(player.id.toString());
+    async PlayerInDb(){
+        let playerData = await this.bot.db.collection('players').doc(this.player.id.toString());
         await playerData.get().then(doc => {
             console.log("TEST")
             console.log(doc)
-            return doc.exists
+            if(doc.exists){
+                return true;
+            } else {
+                this.bot.db.collection('players').doc(this.player.id.toString()).set({
+                    "memberID": this.player.id.toString(),
+                    "memberScore": "0",
+                    "memberTickets": "10",
+                }).then(() => {
+                    console.log('Added user ' + this.player.id.toString());
+                });
+            }
           })
           .catch(err => {
             console.log('Error getting document', err);
