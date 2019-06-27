@@ -1,5 +1,37 @@
 const Game = require("../game.js")
-const jackpot = require("../jackpot.json")
+const jackpot =  Object.freeze(["```css", 
+"                                    ", 
+"   _________________________________", 
+"  |    ____   ____    __     ___    |", 
+"  |   / __/  / __ \\  /  \\   | _ \\   |", 
+"  |  / / __ / /_/ | / /\\ \\  |  _|   |", 
+"  | / /_/ // _  _/ / ____ \\ | |     |", 
+"  | \\____//_/ \\_\\ /_/    \\_\\|_|     |", 
+"  |===_______===_______===_______===|", 
+"  ||*|             ||            |*||", 
+"  ||*|            /||\\           |*||", 
+"  ||*|           //  \\\\          |*||", 
+"  ||*|          ((    ))         |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||",
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|                           |*||", 
+"  ||*|___________________________|*||", 
+"  |===___________________________===|", 
+"  |  /___________________________\\  |", 
+"  |   |                         |   |", 
+"  |   |   ◀       ⚫       ▶   |   |", 
+" _|    \\_______________________/    |_", 
+"(_____________________________________)```"
+]);
 const arm = [
     "  ||*|     ||                    |*||",
     "  ||*|         ||                |*||",
@@ -19,6 +51,8 @@ const claw = [
         "\\\\  //"
     ]
 ];
+
+const points = [10,20,30,0,0,0,0,0];
 class Claw extends Game{
     //player;
     //channel;
@@ -50,15 +84,24 @@ class Claw extends Game{
         collector.on('end', collected => this.endCollector(collected));
 
     }
+    resetView(){
+        this.view = [...jackpot];
+    }
+    getPoints(){
+        if(this.points < 10){
+            return this.points.toString() + " "
+        } else {
+            return this.points.toString()
+        }
+    }
     async buildScreen(position, height, grabbed){
         this.position = position;
         this.height = height;
         this.grabbed = grabbed;
-        this.view = jackpot;
-        if(await this.height == 1){
+        await this.resetView();
+        if(this.height == 1){
             this.view[9] = arm[position];
             this.view[10] = arm[position];
-            //console.log(this.view[10]);
             if(grabbed === 0){
                 position++;
                 this.view[11] = "  ||*|" + new Array((4 * position) + 1).join(" ") + claw[0][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
@@ -68,9 +111,9 @@ class Claw extends Game{
                 position++;
                 this.view[11] = "  ||*|" + new Array((4 * position) + 1).join(" ") + claw[1][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
                 this.view[12] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
-                this.view[13] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][2] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[13] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][2].replace("  ", this.getPoints()) + new Array((23 - (4 * position))).join(" ") + "|*||";
             }
-        } else if(await this.height == 0){
+        } else if(this.height == 0){
             for(var i = 9;i < 22; i++){
                 this.view[i] = arm[position];
             }
@@ -83,7 +126,7 @@ class Claw extends Game{
                 position++;
                 this.view[22] = "  ||*|" + new Array((4 * position) + 1).join(" ") + claw[1][0] + new Array((23 - (4 * position)) + 1).join(" ") + "|*||";
                 this.view[23] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][1] + new Array((23 - (4 * position))).join(" ") + "|*||";
-                this.view[24] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][2] + new Array((23 - (4 * position))).join(" ") + "|*||";
+                this.view[24] = "  ||*|" + new Array((4 * position)).join(" ") + claw[1][2].replace("  ", this.getPoints()) + new Array((23 - (4 * position))).join(" ") + "|*||";
             }
             
         }
@@ -109,8 +152,8 @@ class Claw extends Game{
                 break;
             default:
                 this.position--;
-                this.buildScreen(this.position,this.height,this.grabbed);
-                this.screen = await this.screen.edit(this.view.join("\n"));
+                await this.buildScreen(this.position,this.height,this.grabbed);
+               await this.screen.edit(this.view.join("\n"));
                 break;
         }
     }
@@ -121,8 +164,8 @@ class Claw extends Game{
                 break;
             default:
                 this.position++;
-                this.buildScreen(this.position,this.height,this.grabbed);
-                this.screen = await this.screen.edit(this.view.join("\n"));
+                await this.buildScreen(this.position,this.height,this.grabbed);
+                await this.screen.edit(this.view.join("\n"));
                 break;
         }
     }
@@ -130,19 +173,24 @@ class Claw extends Game{
     async clawMoveDown(){
         this.grabbed = 1;
         this.height = 0;
-        this.buildScreen(this.position,this.height,this.grabbed);
-        this.screen = await this.screen.edit(this.view.join("\n"));
-        await setTimeout(() => {this.clawMoveUp()}, 1000);
+        this.points = await this.getRandomPoints()
+        await this.buildScreen(this.position,this.height,this.grabbed);
+        this.screen.edit(this.view.join("\n"));
+        setTimeout(() => {this.clawMoveUp()}, 1000);
         
     }
 
     async clawMoveUp(){
+        console.log("up")
         this.grabbed = 1;
         this.height = 1;
-        this.buildScreen(this.position,this.height,this.grabbed);
-        this.screen = await this.screen.edit(this.view.join("\n"));
+        await this.buildScreen(this.position,this.height,this.grabbed, this.points);
+        await this.screen.edit(this.view.join("\n"));
+        this.endGame();
     }
-
+    getRandomPoints(){
+        return points[Math.floor(Math.random() * points.length)];
+    }
     async endCollector(collected){
         if(!this.ended){
             this.endGame(true);
@@ -151,13 +199,19 @@ class Claw extends Game{
 
     async endGame(forced) {
         this.ended = true;
-        this.channel.send('end');
-        /*if(forced){
+        if(forced){
             this.channel.send("You were too late with responding. Well, better luck next time.");
         } else {
-            this.channel.send("You were on time!\nYou have won 100 points!");
-            this.givePoints(100);    
-        }*/
+            if(this.points === 0){
+                this.channel.send("You have gained no points\nYou wanna try another round?");
+
+            } else {
+                this.channel.send("You have won " + this.points + " points!\nGreat job!")
+                this.givePoints(this.points);
+            }
+            
+                
+        }
         return;
     }
 }
