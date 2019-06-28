@@ -62,6 +62,7 @@ async function payPrice(price, player, bot){
         });
 }
 module.exports.run = async (bot, message, args) => {
+    if(!args[0]) return;
     let game = bot.games.get(args[0].toLowerCase());
         if (game) {
             try {
