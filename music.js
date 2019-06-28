@@ -80,6 +80,10 @@ class MusicPlayer {
         this.queue.push(song);
         this.message.channel.send(`**${song.title}** has been added to the queue!`);
     }
+
+    async skip(){
+        this.stream.end();
+    }
 }
 
 module.exports = MusicPlayer;
