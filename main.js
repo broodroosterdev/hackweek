@@ -7,6 +7,7 @@ const bot = new Discord.Client({
 });
 bot.commands = new Discord.Collection();
 bot.games = new Discord.Collection();
+bot.players = new Discord.Collection();
 
 //Import settings
 let prefix;

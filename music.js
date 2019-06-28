@@ -12,7 +12,7 @@ class MusicPlayer {
     constructor(guild, message, bot){
         if (!message.member.voiceChannel) return message.channel.send(':x: Ga eerst in een Voice Channel!');
         this.guild = guild
-        this.queue = new Discord.Collection();
+        this.queue = [];
         this.voiceChannel;
         this.textChannel = message.channel;
         this.volume = 3;
@@ -27,27 +27,58 @@ class MusicPlayer {
         let validate = await ytdl.validateURL(args[0]);
 
         if (!validate) return message.channel.send(':x: Geef een **geldige** URL op!');
-        console.log("validated")
-
-        let info = await ytdl.getInfo(args[0]);
-        let options = {
+        console.log("validated");
+    
+        this.options = {
             seek: 0,
             volume: this.volume / 10
         };
-        console.log(options);
-        this.voiceConnection = message.member.voiceChannel.join()
-        .then(async voiceChannel => {
-            var stream = ytdl(args[0], {
+        if(!this.voiceConnection){
+            this.voiceConnection = await message.member.voiceChannel.join()
+        }
+        await this.addToQueue(args[0]);
+        this.message = message;
+        await this.playNextInQueue();
+        
+        
+    }
+
+    async playNextInQueue(){
+        if(this.queue[0]){
+            if(this.playing) return;
+            this.playing = true;
+            var stream = ytdl(this.queue[0].url, {
                 filter: "audioonly",
-                quality: "highest"
+                quality: "highest"            
             });
-            console.log(stream);
-            this.stream = await voiceChannel.playStream(stream, options);
-            console.log(this.stream);
-        })
-        .catch(console.error);
-        console.log(this.voiceConnection);
-        message.channel.send(`Nu aan het spelen: **${info.title}**`);
+            this.message.channel.send(`Now playing: **${this.queue[0].title}**`);
+            if(this.stream){
+                if(!this.stream.destroyed){
+                    await this.stream.destroy();
+                }
+            }
+            this.stream = await this.voiceConnection.playStream(stream, this.options)
+            .on('end', () => {
+                this.queue.shift();
+                this.playing = false;
+                this.playNextInQueue(this.options);
+            });
+            
+        } else {
+            await this.stream.destroy();
+            this.voiceConnection.disconnect();
+            this.voiceConnection = undefined;
+            this.queue = [];
+        }
+    }
+    async addToQueue(url){
+        const songInfo = await ytdl.getInfo(url);
+        const song = {
+            title: songInfo.title,
+            url: songInfo.video_url,
+        };
+        this.queue.push(song);
+        this.message.channel.send(`**${song.title}** has been added to the queue!`);
     }
 }
 
