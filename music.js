@@ -10,7 +10,7 @@ class MusicPlayer {
 //     playing: true,
     */
     constructor(guild, message, bot){
-        if (!message.member.voiceChannel) return message.channel.send(':x: Ga eerst in een Voice Channel!');
+        if (!message.member.voiceChannel) return message.channel.send(':x: Join a voice channel first!');
         this.guild = guild
         this.queue = [];
         this.voiceChannel;
@@ -22,11 +22,11 @@ class MusicPlayer {
         return this;
     }
     async play(message, args){
-        if (!args[0]) return message.channel.send(':x: Geef een URL op!');
+        if (!args[0]) return message.channel.send(':x: Use a YouTube URL');
 
         let validate = await ytdl.validateURL(args[0]);
 
-        if (!validate) return message.channel.send(':x: Geef een **geldige** URL op!');
+        if (!validate) return message.channel.send(':x: Use a valid YouTube URL');
         console.log("validated");
     
         this.options = {
@@ -51,7 +51,11 @@ class MusicPlayer {
                 filter: "audioonly",
                 quality: "highest"            
             });
-            this.message.channel.send(`Now playing: **${this.queue[0].title}**`);
+            let musicEmbed = new Discord.RichEmbed()
+                .setTitle("Now playing")
+                .setDescription(`**${this.queue[0].title}**`)
+                .setTimestamp(new Date())
+            this.message.channel.send(musicEmbed);
             if(this.stream){
                 if(!this.stream.destroyed){
                     await this.stream.destroy();

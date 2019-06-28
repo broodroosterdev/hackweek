@@ -68,7 +68,6 @@ module.exports.run = async (bot, message, args) => {
                         console.log('No such document!');
                     } else {
                         let dPrefix = doc.data().prefix;
-console.log('hey')    
                 let gamesEmbed = new Discord.RichEmbed()
                     .setTitle(`Games`)
                     .setThumbnail(sIcon)
@@ -102,7 +101,7 @@ console.log('hey')
                     .setThumbnail(sIcon)
                     .addField(`Play`, `I'm getting bored, play me some music, usage: \n` + dPrefix + 'play [YOUTUBE LINK]')
                     .addField(`Skip`, `Do you not like this song? Use: \n` + dPrefix + 'skip')
-                    .addField(`Queue`, `Wanna know what's coming up next? Try using: \n` + dPrefix + 'queue')
+                    .addField(`Playlist`, `Wanna know what's coming up next? Try using: \n` + dPrefix + 'playlist')
                     .addField(`Disconnect`, `Somebody is playing stupid songs, use: \n` + dPrefix + 'dc')
                     .setColor("#FFFFFF")
                     .setTimestamp(new Date())
