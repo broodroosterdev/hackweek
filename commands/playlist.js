@@ -4,10 +4,10 @@ module.exports.run = async (bot, message, args) => {
     let playlist = "";
     let counter = 1;
     await queue.forEach(song => {
-        playlist += counter + ") **" + song.title + "**\n"
+        playlist += counter + ") " + song.title + "\n"
         counter++;
     });
-    message.channel.send(playlist);
+    message.channel.sendCode("js", playlist);
 }
 
 module.exports.help = {

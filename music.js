@@ -15,7 +15,7 @@ class MusicPlayer {
         this.queue = [];
         this.voiceChannel;
         this.textChannel = message.channel;
-        this.volume = 3;
+        this.volume = 2;
         this.playing = false;
         this.message = message;
         this.bot = bot;
@@ -54,6 +54,7 @@ class MusicPlayer {
             let musicEmbed = new Discord.RichEmbed()
                 .setTitle("Now playing")
                 .setDescription(`**${this.queue[0].title}**`)
+                .setColor("#FFFFFF")
                 .setTimestamp(new Date())
             this.message.channel.send(musicEmbed);
             if(this.stream){
@@ -82,7 +83,11 @@ class MusicPlayer {
             url: songInfo.video_url,
         };
         this.queue.push(song);
-        this.message.channel.send(`**${song.title}** has been added to the queue!`);
+        let queueEmbed = new Discord.RichEmbed()
+            .setTitle("Added to queue")
+            .setColor("#FFFFFF")
+            .setDescription(`${song.title}`)
+        this.message.channel.send(queueEmbed);
     }
 
     async skip(){
