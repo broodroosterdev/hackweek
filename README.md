@@ -30,10 +30,10 @@ A person is just giving everyone a headache. Use this command fast:
 ## Music
 Are you lonely in the voice channel, or do you just want to get the vibe going? We got some music for you!
 #### Play
-To get something to play, use:<br/>
+To get something to play, use:\
 /play [YOUTUBE URL]
 #### Skip
-I don't really like this song, next one please! 
+I don't really like this song, next one please!\ 
 Usage: /skip
 #### Playlist
 I want to know what's up next. 
