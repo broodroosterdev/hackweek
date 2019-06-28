@@ -62,32 +62,67 @@ module.exports.run = async (bot, message, args) => {
                 break;
 
             case '🎮':
-                let gamesEmbed = await new Discord.RichEmbed()
-                    .setTitle(`**Help commands for Hackweek**`)
+                let guild2Data = await bot.db.collection('guilds').doc(message.guild.id);
+                await guild2Data.get().then(doc => {
+                    if (!doc.exists) {
+                        console.log('No such document!');
+                    } else {
+                        let dPrefix = doc.data().prefix;
+console.log('hey')    
+                let gamesEmbed = new Discord.RichEmbed()
+                    .setTitle(`Games`)
                     .setThumbnail(sIcon)
                     .setColor("#FFFFFF")
-                    .addField(`**GAMES**`)
+                    .addField(`Claw machine`, `Let's waste some money, start the claw game with the following usage: \n` + dPrefix + `start claw`)
+
                     .setTimestamp(new Date())
                     .setFooter(`Requested by ${message.author.tag}`, `${message.author.avatarURL}`)
 
                 m.edit(gamesEmbed);
+                console.log('Document data:', doc.data());
+                console.log(doc.data().dPrefix);
+
+                    }
+                })
+                    .catch(err => {
+                        console.log('Error getting document', err);
+                });
+
                 break;
 
             case '🎵':
+                let guild3Data = await bot.db.collection('guilds').doc(message.guild.id);
+                await guild3Data.get().then(doc => {
+                    if (!doc.exists) {
+                        console.log('No such document!');
+                    } else {
+                        let dPrefix = doc.data().prefix;
                 let musicEmbed = new Discord.RichEmbed()
-                    .setTitle(`**Help commands for Hackweek**`)
+                    .setTitle(`Music`)
                     .setThumbnail(sIcon)
-                    .addField(`**MUSIC**`)
+                    .addField(`Play`, `I'm getting bored, play me some music, usage: \n` + dPrefix + 'play [YOUTUBE LINK]')
+                    .addField(`Skip`, `Do you not like this song? Use: \n` + dPrefix + 'skip')
+                    .addField(`Queue`, `Wanna know what's coming up next? Try using: \n` + dPrefix + 'queue')
+                    .addField(`Disconnect`, `Somebody is playing stupid songs, use: \n` + dPrefix + 'dc')
                     .setColor("#FFFFFF")
                     .setTimestamp(new Date())
                     .setFooter(`Requested by ${message.author.tag}`, `${message.author.avatarURL}`)
 
                 m.edit(musicEmbed);
+                console.log('Document data:', doc.data());
+                console.log(dPrefix);
+
+                    }
+                })
+                    .catch(err => {
+                        console.log('Error getting document', err);
+                    });
+
                 break;
 
             case '🛠':
-                let guildData = await bot.db.collection('guilds').doc(message.guild.id);
-                await guildData.get().then(doc => {
+                let guild4Data = await bot.db.collection('guilds').doc(message.guild.id);
+                await guild4Data.get().then(doc => {
                         if (!doc.exists) {
                             console.log('No such document!');
                         } else {
@@ -96,10 +131,10 @@ module.exports.run = async (bot, message, args) => {
                                 .setTitle(`**Moderation tools**`)
                                 .setThumbnail(sIcon)
                                 .setColor("#FFFFFF")
-                                .addField(dPrefix + `Setprefix`, `More bots on your server? Use a different prefix. Usage:\n` + dPrefix + 'setprefix [new prefix]')
-                                .addField(dPrefix + `Purge`, `This performs mass message deletion. Use this command as following: \n` + dPrefix + 'purge [number between 2 and 99]')
-                                .addField(dPrefix + `Kick`, `Is somebody annoying? Use this command as following: \n` + dPrefix + 'kick [@name] [reason]')
-                                .addField(dPrefix + `Ban`, `Someone isn't listening? Usage:\n` + dPrefix + 'ban [@name] [reason]')
+                                .addField(`Set new prefix`, `More bots on your server? Use a different prefix. Usage:\n` + dPrefix + 'setprefix [new prefix]')
+                                .addField(`Purge`, `This performs mass message deletion. Use this command as following: \n` + dPrefix + 'purge [number between 2 and 99]')
+                                .addField(`Kick`, `Is somebody annoying? Use this command as following: \n` + dPrefix + 'kick [@name] [reason]')
+                                .addField(`Ban`, `Someone isn't listening? Usage:\n` + dPrefix + 'ban [@name] [reason]')
                                 .setTimestamp(new Date())
                                 .setFooter(`Requested by ${message.author.tag}`, `${message.author.avatarURL}`)
                             m.edit(moderationEmbed);
