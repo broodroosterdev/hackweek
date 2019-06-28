@@ -1,3 +1,5 @@
+![alt-text](https://github.com/broodroosterdev/hackweek/blob/master/hack_wump_ship.png "Discord Hack Week 2019")
+
 # GameStation
 This bot is created for Discord Hack Week 2019!
 
