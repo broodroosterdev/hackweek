@@ -65,6 +65,24 @@ fs.readdir("./games/", (err, files) => {
 });
 
 
+//MUSIC HANDLER
+fs.readdir("./music/", (err, files) => {
+
+    if (err) return console.log(err);
+    gameFiles = files.filter(f => f.split(".").pop() === "js")
+    if (gameFiles.length <= 0) {
+        console.log("Couldn't find music.");
+        return;
+    }
+
+    gameFiles.forEach((f, i) => {
+        let props = require(`./music/${f}`);
+        console.log(`${i+1}: ${f} loaded!`);
+        bot.games.set(props.name, props);
+    })
+
+});
+
 bot.on('ready', () => {
     console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
     setInterval(() => {
