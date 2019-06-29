@@ -1,5 +1,5 @@
 const Game = require("../game.js")
-const jackpot =  Object.freeze(["```css", 
+const machine =  Object.freeze(["```css", 
 "                                    ", 
 "   _________________________________", 
 "  |    ____   ____    __     ___    |", 
@@ -86,7 +86,7 @@ class Claw extends Game{
 
     }
     resetView(){
-        this.view = [...jackpot];
+        this.view = [...machine];
     }
     getPoints(){
         if(this.points < 10){

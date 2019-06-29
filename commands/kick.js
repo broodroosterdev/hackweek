@@ -18,7 +18,8 @@ module.exports.run = async (bot, message, args) => {
         .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
     const logs = message.guild.channels.find(channel => channel.name === "logs");
     let kickEmbed = new Discord.RichEmbed()
-        .setTitle("KICK MESSAGE")
+        .setTitle("Kicking shoes")
+        .setColor("#FFFFFF")
         .addField("Kicked", member, true)
         .addField("Channel", message.channel, true)
         .addField("Reason", reason)

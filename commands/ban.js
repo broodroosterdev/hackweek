@@ -17,7 +17,8 @@ module.exports.run = async (bot, message, args) => {
     member.send(`${member} is banned because of ${reason}`);
     const logs = message.guild.channels.find(channel => channel.name === "logs");
     let banEmbed = new Discord.RichEmbed()
-        .setTitle("ban MESSAGE")
+        .setTitle("Ban hammer")
+        .setColor("#FFFFFF")
         .addField("Banned", member, true)
         .addField("Channel", message.channel, true)
         .addField("Reason", reason)

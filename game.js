@@ -61,8 +61,7 @@ class Game {
             } else {
                 this.bot.db.collection('players').doc(this.player.id.toString()).set({
                     "memberID": this.player.id.toString(),
-                    "memberScore": "0",
-                    "memberTickets": "10",
+                    "memberScore": "50"
                 }).then(() => {
                     console.log('Added user ' + this.player.id.toString());
                 });

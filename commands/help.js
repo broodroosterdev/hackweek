@@ -99,11 +99,11 @@ module.exports.run = async (bot, message, args) => {
                 let musicEmbed = new Discord.RichEmbed()
                     .setTitle(`Music`)
                     .setThumbnail(sIcon)
+                    .setColor("#FFFFFF")
                     .addField(`Play`, `I'm getting bored, play me some music, usage: \n` + dPrefix + 'play [YOUTUBE LINK]')
                     .addField(`Skip`, `Do you not like this song? Use: \n` + dPrefix + 'skip')
                     .addField(`Playlist`, `Wanna know what's coming up next? Try using: \n` + dPrefix + 'playlist')
                     .addField(`Disconnect`, `Somebody is playing stupid songs, use: \n` + dPrefix + 'dc')
-                    .setColor("#FFFFFF")
                     .setTimestamp(new Date())
                     .setFooter(`Requested by ${message.author.tag}`, `${message.author.avatarURL}`)
 
