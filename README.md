@@ -40,3 +40,20 @@ Use this: /playlist
 #### Disconnect
 I'm done with the music!  
 Usage: /dc
+
+# SETUP
+To use this bot you'll have to install node.js (a guide for it: https://www.youtube.com/watch?v=XQMqmGk_Mqk)  
+Go to https://discordapp.com/developers/applications/ and create a new application, including a bot which has Administrator permissions.
+Clone this repository to your local machine.  
+Install FFMPEG on your machine, a guide for this: https://www.youtube.com/watch?v=f_OOhBniSu8
+Create a file named: config.json, in this file we are going to place the bot token, you can get that token from the https://discordapp.com/developers/applications/ page.
+You'll also need a firebase account, go to https://firebase.com and login with your Google account. Create a new application.  
+After you've created the application go to project overview, serviceaccounts and then create a new private key. Place this inside the main folder and name it: serviceAccount.json  
+Now we just have to install a few node modules, these are:
+  1) npm install discord.js  
+  2) npm install firebase-admin  
+  3) npm install firebase  
+  4) ffmpeg-binaries  
+  5) ytdl-core  
+
+That should be it!
