@@ -9,7 +9,7 @@
     "ffmpeg-static": "^2.4.0",
     "firebase": "^6.2.2",
     "firebase-admin": "^8.2.0",
-    "mathjs": "^6.0.2",
+    "mathjs": "^7.5.1",
     "node-opus": "^0.3.2",
     "opusscript": "0.0.6",
     "simple-youtube-api": "^5.2.0",
